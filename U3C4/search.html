@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <style>
+        #search_results {
+          
+        }
+
+        img{
+
+width:30%;
+height:150px
+}
+      </style>
+    
+    
+</body>
+
+<h1>Searched news</h1>
+
+
+
+    <div id="search_results"></div>
+  </body>
+
+</html>
+
+<script>
+var inp=JSON.parse(localStorage.getItem("search_term"));
+
+
+searchVideos()
+  let search_results_div = document.getElementById("search_results");
+  
+  async function searchVideos() {
+    try {
+
+       
+
+      let res = await fetch(
+        `https://shrouded-earth-23381.herokuapp.com/api/search/?q=${inp}`
+      );
+
+      let data = await res.json();
+      console.log("data:", data);
+
+      let deepak = data;
+
+
+      appendVideos(deepak);
+    } catch (err) {
+      console.log("err:", err);
+    }
+  }
+
+  function appendVideos(deepak){
+
+    
+  deepak.forEach(function (el) {
+    let div = document.createElement("div");
+
+    let img = document.createElement("img");
+
+    img.src = el.urlToImage;
+
+    let title = document.createElement("p");
+
+    title.innerText = el.description;
+
+
+    
+    div.addEventListener("click", function () {
+      addToCart(el);
+    });
+
+    
+      div.append(img,title)
+
+      
+
+
+      search_results_div.appendChild(div);
+      
+
+  });
+  var cartArr = [];
+  function addToCart(deepak) {
+    cartArr.push(deepak);
+    if(cartArr.length>1){
+        cartArr.shift()
+       
+
+    }
+    localStorage.setItem("Cart", JSON.stringify(cartArr));
+    window.location.href="news.html"
+   
+  }
+
+  }
+
+  
+
+
+</script>

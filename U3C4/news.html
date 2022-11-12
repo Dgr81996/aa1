@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+
+.nav {
+          
+           width:200px ;
+          color: blue;
+          height: 300px;
+          width: 200px;
+          padding: 25px 0 0 20px;
+          border-radius: 20px;
+          /* top right bottom left */
+        }
+        .left {
+          width: 20%;
+        }
+        .right {
+          
+          justify-content: space-around;
+          width: 30%;
+        }
+        a {
+          text-decoration: none;
+          color: white;
+        }
+
+        #container{
+
+width:700px ;
+
+display:grid;
+grid-template-columns: 25% 25% 25% 25%;
+
+margin-top: 5%;
+margin-left: 5%;
+margin-right:5%;
+
+grid-gap:20px;
+
+}
+
+
+
+
+
+</style>
+<body>
+    <h1>News</h1>
+
+
+    <div style="display:flex">
+
+
+        <div class="nav">
+            <div class="left"><input type="text" id="searchbar" /></div>
+            <div class="right">
+              <div>
+                
+              </div>
+              
+              
+              <div onclick="window.location.href='index.html'">home</div>
+              <div onclick="window.location.href='news.html'">news</div>
+            </div>
+
+            
+          </div>
+
+          <div id="container"></div>
+
+    </div>
+
+  </body>
+</html>
+
+<script>
+
+var cartArr=JSON.parse(localStorage.getItem("Cart"));
+console.log(cartArr)
+  cartArr.forEach(function (el) {
+    let div = document.createElement("div");
+
+    let img = document.createElement("img");
+
+    img.src = el.urlToImage;
+
+
+    let price = document.createElement("p");
+
+    price.innerText = el.content;
+
+    
+      div.append(img,price)
+      document.querySelector("#container").append(div);
+      
+    })
+
+    let input=document.getElementById("searchbar");
+  input.addEventListener("keypress", (e) => {
+    if (e.key==="Enter"){
+      let input_value = document.getElementById("searchbar").value;
+      localStorage.setItem("search_term", JSON.stringify(input_value));
+      
+      window.location.href="search.html";
+
+    }
+    
+  });
+</script>
+      
+
+      
+
+
+

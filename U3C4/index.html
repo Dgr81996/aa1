@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .nav {
+          
+            
+          color: blue;
+          height: 300px;
+          width: 200px;
+          padding: 25px 0 0 20px;
+          border-radius: 20px;
+          /* top right bottom left */
+        }
+        .left {
+          width: 20%;
+        }
+        .right {
+          
+          justify-content: space-around;
+          width: 30%;
+        }
+        a {
+          text-decoration: none;
+          color: white;
+        }
+      </style>
+</head>
+<body>
+
+    <style>
+        #search_results {
+            margin-left:20px
+          
+        }
+
+        img{
+
+width:30%;
+height:150px
+}
+      </style>
+    
+    
+</body>
+
+<h1>India's news</h1>
+
+    <div style="display:flex">
+
+
+        <div class="nav">
+            <div class="left"><input type="text" id="searchbar" /></div>
+            <div class="right">
+              <div>
+                
+              </div>
+              
+              
+              <div onclick="window.location.href='index.html'">home</div>
+              <div onclick="window.location.href='news.html'">news</div>
+              
+            </div>
+          </div>
+
+          <div id="search_results"></div>
+
+    </div>
+
+    
+  </body>
+
+</html>
+
+<script>
+
+
+
+let search_results_div = document.getElementById("search_results");
+
+let data = [];
+
+fetch('https://shrouded-earth-23381.herokuapp.com/api/headlines/india')
+  .then(function (res) {
+    return res.json();
+  })
+  .then(function (res) {
+    data = res;
+      console.log("data:", data);
+      
+
+      appendVideos(data);
+  });
+
+  
+  
+
+  function appendVideos(deepak){
+  deepak.forEach(function (el) {
+    let div = document.createElement("div");
+
+    let img = document.createElement("img");
+
+    img.src = el.urlToImage;
+
+    let title = document.createElement("p");
+
+    title.innerText = el.description;
+
+
+    
+    div.addEventListener("click", function () {
+      addToCart(el);
+    });
+
+    
+      div.append(img,title)
+
+      
+
+
+      search_results.appendChild(div);
+      
+
+  });
+  var cartArr = [];
+  function addToCart(deepak) {
+    cartArr.push(deepak);
+    if(cartArr.length>1){
+        cartArr.shift()
+       
+
+    }
+    localStorage.setItem("Cart", JSON.stringify(cartArr));
+    window.location.href="news.html"
+   
+  }
+
+  }
+
+let input=document.getElementById("searchbar");
+  input.addEventListener("keypress", (e) => {
+    if (e.key==="Enter"){
+      let input_value = document.getElementById("searchbar").value;
+      localStorage.setItem("search_term", JSON.stringify(input_value));
+      
+      window.location.href="search.html";
+
+    }
+    
+  });
+
+  
+
+
+</script>
